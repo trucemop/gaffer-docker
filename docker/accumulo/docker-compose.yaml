@@ -146,3 +146,17 @@ services:
     volumes:
     - ./conf:${ACCUMULO_CONF_DIR}:ro
     - /var/log/accumulo
+  nifi:
+    image: apache/nifi:1.15.3
+    ports:
+      - 8443:8443
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=${SINGLE_USER_CREDENTIALS_USERNAME}
+      - SINGLE_USER_CREDENTIALS_PASSWORD=${SINGLE_USER_CREDENTIALS_PASSWORD}
+    volumes:
+      - type: "bind"
+        source: "./extensions"
+        target: "/opt/nifi/nifi-current/extensions"
+      - type: "bind"
+        source: "./nifi/conf"
+        target: "/opt/nifi/nifi-current/conf"
